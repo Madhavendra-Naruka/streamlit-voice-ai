@@ -1,0 +1,31 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+
+# Streamlit
+.streamlit/
+
+# GCP credential file
+gcp_credentials.json
+*.json
+
+# OS / IDE files
+.DS_Store
+*.swp
+*.swo
+*.bak
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Python egg info
+*.egg-info/
+dist/
+build/
