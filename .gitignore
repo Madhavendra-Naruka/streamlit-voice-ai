@@ -11,7 +11,7 @@ venv/
 .streamlit/
 
 # GCP credential file
-gcp_credentials.json
+
 *.json
 
 # OS / IDE files
