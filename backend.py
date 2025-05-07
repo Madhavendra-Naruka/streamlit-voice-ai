@@ -19,14 +19,20 @@ import streamlit as st
 
 # **************for streamlit******************
 
-# Write GCP credentials to a temporary file
-gcp_credentials = st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"]
-with open("gcp_credentials.json", "w") as f:
-    f.write(gcp_credentials)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp_credentials.json"
+# Load credentials from st.secrets
+google_creds = st.secrets["google"]["credentials"]
+gemini_key = st.secrets["gemini"]["api_key"]
 
-# Set up Gemini API key
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+# Set environment variable for Google credentials
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
+
+# Write credentials to a temporary file (for Google SDK to read)
+with open("/tmp/google_credentials.json", "w") as f:
+    f.write(google_creds)
+
+# Use the gemini_key wherever required
+import google.generativeai as genai
+genai.configure(api_key=gemini_key)
 
 
 # Function to transcribe with Google Cloud Speech-to-Text
