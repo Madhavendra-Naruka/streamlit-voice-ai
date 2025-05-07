@@ -2,6 +2,8 @@ from google.cloud import speech_v1p1beta1 as speech
 import google.generativeai as genai
 import io
 import os
+import streamlit as st
+
 
 # ***********for local machine*************
 
