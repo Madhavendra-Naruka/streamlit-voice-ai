@@ -24,12 +24,12 @@ import google.generativeai as genai
 google_creds = st.secrets["google"]["credentials"]
 gemini_key = st.secrets["gemini"]["api_key"]
 
-# Set environment variable for Google credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
+# # Set environment variable for Google credentials
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
 
-# Write credentials to a temporary file (for Google SDK to read)
-with open("/tmp/google_credentials.json", "w") as f:
-    f.write(google_creds)
+# # Write credentials to a temporary file (for Google SDK to read)
+# with open("/tmp/google_credentials.json", "w") as f:
+#     f.write(google_creds)
 
 # Use the gemini_key wherever required
 genai.configure(api_key=gemini_key)
