@@ -1,29 +1,34 @@
-import streamlit as st
+from google.cloud import speech_v1p1beta1 as speech
+import google.generativeai as genai
+import io
 import os
-import genai
-from google.cloud import speech
 
-# Load credentials from st.secrets
-google_creds = st.secrets["gcp_creds"]  # Google Cloud credentials
-gemini_key = st.secrets["gemini_api_key"]  # Gemini API key
+# ***********for local machine*************
 
-# Display the loaded Gemini API key for confirmation
-st.write("Google Credentials Loaded")
-st.warning(gemini_key)
+# # Set your credentials path
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "audi-api-459011-25c023846c00.json"
 
-# Set the environment variable for Google credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
+# # Set up Gemini API key
+# genai.configure(api_key=os.getenv("AIzaSyApF4U0FhxjwRi5ewDm5pvGcaA-SDC38oU"))
+# # models = list(genai.list_models())  # Convert the generator to a list
+# # print(models)
 
-# Write Google credentials to a temporary file for the Google SDK to read
-with open("/tmp/google_credentials.json", "w") as f:
-    f.write(google_creds)
 
-# Initialize Gemini API with the api_key
-genai.configure(api_key=gemini_key)
 
-# Function to transcribe audio with Google Cloud Speech-to-Text
+# **************for streamlit******************
+
+# Write GCP credentials to a temporary file
+gcp_credentials = st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"]
+with open("gcp_credentials.json", "w") as f:
+    f.write(gcp_credentials)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp_credentials.json"
+
+# Set up Gemini API key
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
+
+# Function to transcribe with Google Cloud Speech-to-Text
 def transcribe_audio(audio_bytes):
-    # Initialize the Google Cloud Speech client
     client = speech.SpeechClient()
     audio = speech.RecognitionAudio(content=audio_bytes)
     config = speech.RecognitionConfig(
@@ -31,13 +36,11 @@ def transcribe_audio(audio_bytes):
         language_code="en-US",
     )
     response = client.recognize(config=config, audio=audio)
-    # Extract the transcription text
     transcript = " ".join([result.alternatives[0].transcript for result in response.results])
     return transcript
 
-# Function to ask Gemini (ensure you have a model ready)
+# Function to ask Gemini
 def ask_gemini(prompt):
-    # Initialize the Gemini model and generate a response
     model = genai.GenerativeModel("gemini-1.5-pro")
     response = model.generate_content(prompt)
     return response.text
