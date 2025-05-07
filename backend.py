@@ -23,8 +23,7 @@ import google.generativeai as genai
 # Load credentials from st.secrets
 google_creds = st.secrets["google"]["credentials"]
 gemini_key = st.secrets["gemini"]["api_key"]
-st.write(google_creds)
-st.warning(gemini_key)
+
 # Set environment variable for Google credentials
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
 
