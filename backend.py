@@ -20,23 +20,25 @@ import google.generativeai as genai
 
 # **************for streamlit******************
 
+
 # Load credentials from st.secrets
-google_creds = st.secrets["google"]["credentials"]
+google_creds = st.secrets["google"]["private_key"]  # Make sure to use 'private_key' from your st.secrets
 gemini_key = st.secrets["gemini"]["api_key"]
-st.write(google_creds)
+
+st.write("Google Credentials Loaded")
 st.warning(gemini_key)
+
 # Set environment variable for Google credentials
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
 
-# Write credentials to a temporary file (for Google SDK to read)
+# Write Google credentials to a temporary file for Google SDK to read
 with open("/tmp/google_credentials.json", "w") as f:
     f.write(google_creds)
 
-# Use the gemini_key wherever required
+# Initialize Gemini API with the api_key
 genai.configure(api_key=gemini_key)
 
-
-# Function to transcribe with Google Cloud Speech-to-Text
+# Function to transcribe audio with Google Cloud Speech-to-Text
 def transcribe_audio(audio_bytes):
     client = speech.SpeechClient()
     audio = speech.RecognitionAudio(content=audio_bytes)
@@ -48,7 +50,7 @@ def transcribe_audio(audio_bytes):
     transcript = " ".join([result.alternatives[0].transcript for result in response.results])
     return transcript
 
-# Function to ask Gemini
+# Function to ask Gemini (ensure you have a model ready)
 def ask_gemini(prompt):
     model = genai.GenerativeModel("gemini-1.5-pro")
     response = model.generate_content(prompt)
