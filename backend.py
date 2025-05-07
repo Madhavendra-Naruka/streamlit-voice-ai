@@ -3,6 +3,7 @@ import google.generativeai as genai
 import io
 import os
 import streamlit as st
+import google.generativeai as genai
 
 
 # ***********for local machine*************
@@ -31,7 +32,6 @@ with open("/tmp/google_credentials.json", "w") as f:
     f.write(google_creds)
 
 # Use the gemini_key wherever required
-import google.generativeai as genai
 genai.configure(api_key=gemini_key)
 
 
