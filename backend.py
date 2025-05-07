@@ -63,6 +63,6 @@ def transcribe_audio(audio_bytes):
 
 # Function to ask Gemini
 def ask_gemini(prompt):
-    model = genai.GenerativeModel("gemini-1.5-pro")
+    model = genai.GenerativeModel("gemini-1.5-flash-8b")
     response = model.generate_content(prompt)
     return response.text
