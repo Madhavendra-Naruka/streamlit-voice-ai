@@ -28,12 +28,12 @@ gemini_key = st.secrets["gemini_api_key"]
 st.write("Google Credentials Loaded")
 st.warning(gemini_key)
 
-# Set environment variable for Google credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
+# # Set environment variable for Google credentials
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google_credentials.json"
 
-# Write Google credentials to a temporary file for Google SDK to read
-with open("/tmp/google_credentials.json", "w") as f:
-    f.write(google_creds)
+# # Write Google credentials to a temporary file for Google SDK to read
+# with open("/tmp/google_credentials.json", "w") as f:
+#     f.write(google_creds)
 
 # Initialize Gemini API with the api_key
 genai.configure(api_key=gemini_key)
