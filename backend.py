@@ -23,7 +23,7 @@ import google.generativeai as genai
 
 # Load credentials from st.secrets
 google_creds = st.secrets["gcp_creds"]  # Make sure to use 'private_key' from your st.secrets
-gemini_key = st.secrets["gemini_api_key "]
+gemini_key = st.secrets["gemini_api_key"]
 
 st.write("Google Credentials Loaded")
 st.warning(gemini_key)
